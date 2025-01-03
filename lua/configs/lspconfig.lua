@@ -15,10 +15,21 @@ for _, lsp in ipairs(servers) do
     capabilities = nvlsp.capabilities,
   }
 end
+
+-- we can change the lspconfig by replacing xcrun etc. with some other
+-- lsp depending on the language. it's better to run only one
+-- at a time.
+
 lspconfig.sourcekit.setup({
-  cmd = {
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp'
-  },
+  -- cmd = { "xcrun", "--toolchain", "swift", "sourcekit-lsp", "--default-workspace-type", "buildServer",
+  -- "-Xswiftc", "-sdk",
+  --   "-Xswiftc", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"},
+  cmd = { "sourcekit-lsp", },
+  -- cmd = {
+  --   "sourcekit-lsp",
+  --   "--configuration",
+  --   "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/sourcekit-lsp/sourcekit-lsp.json"
+  -- },
   on_attach = nvlsp.on_attach,
   capabilities = nvlsp.capabilities,
   filetypes = {
